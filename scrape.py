@@ -44,8 +44,17 @@ result = s.post('https://meter.katterno.fi/export.php',
                 allow_redirects=False)
 
 if result.status_code != 200 or not result.headers['Content-Disposition']:
+    print("Unexpected HTTP response:", result.status_code)
     sys.exit(3)
 
 non_empty_lines = [line for line in result.text.split("\n") if line.strip() != ""]
+
+if len(non_empty_lines) == 0:
+    print("No data received")
+    sys.exit(4)
+
+if len(non_empty_lines) <= 1:
+    print("Only received one line of data")
+    sys.exit(5)
 
 print("\n".join(non_empty_lines))
