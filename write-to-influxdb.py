@@ -15,9 +15,19 @@ json_body = []
 
 try:
     for line in sys.stdin:
-        timestamp_string, _, power_usage_string = line.split(';')
+        # Example:
+        # 31.05.2021 00-01;0,47
+        # 31.05.2021 01-02;0,48
+        # 31.05.2021 02-03;0,53
+        # 31.05.2021 03-04;1,02
 
-        timestamp_tzless = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S')
+        full_timestamp_string, power_usage_string = line.split(';')
+        measurement_date, measurement_hour_range = full_timestamp_string.split(' ')
+        # This feels wrong, we should use the second one instead. But the Herrfors
+        # web UI shows it like this.
+        measurement_hour, _ = measurement_hour_range.split('-')
+
+        timestamp_tzless = datetime.datetime.strptime(measurement_date, '%d.%m.%Y').replace(hour=int(measurement_hour))
         timestamp_local_tz = timestamp_tzless.replace(tzinfo=local_tz)
 
         power_usage_kwh = float(power_usage_string.strip().replace(',', '.'))
