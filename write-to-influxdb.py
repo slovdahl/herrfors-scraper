@@ -5,7 +5,7 @@ import dateutil
 import sys
 from influxdb import InfluxDBClient
 
-client = InfluxDBClient(host='automation1.lovdahl.eu', port=8086)
+client = InfluxDBClient(host='localhost', port=8086)
 client.switch_database('power_consumption')
 
 local_tz = dateutil.tz.gettz('Europe/Helsinki')
