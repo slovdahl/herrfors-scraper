@@ -28,7 +28,7 @@ try:
         # 2023-06-26 00:00:00 seems to mean the production between 00:00:00 and 01:00:00
         measurement_hour, _, _ = measurement_hour_minute_second.split(':')
 
-        timestamp_tzless = datetime.datetime.strptime(measurement_date, '%d.%m.%Y').replace(hour=int(measurement_hour))
+        timestamp_tzless = datetime.datetime.strptime(measurement_date, '%Y-%m-%d').replace(hour=int(measurement_hour))
         timestamp_local_tz = timestamp_tzless.replace(tzinfo=local_tz)
 
         power_production_kwh = float(power_production_string.strip().replace(',', '.'))
