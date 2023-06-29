@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 
 import datetime
-import os
-import requests
 import sys
 
-if len(sys.argv) != 4:
+import requests
+
+
+if len(sys.argv) != 5:
     print("Insufficient parameters")
-    print("Usage: ./scrape.py <usage place> <customer number> <date>")
+    print("Usage: ./scrape.py <usage place> <customer number> <date> <consumption|production>")
     sys.exit(1)
 
 usage_place = int(sys.argv[1])
 customer_number = int(sys.argv[2])
 date = sys.argv[3]
 date_obj = datetime.datetime.strptime(date, '%Y-%m-%d')
+scrape_type = sys.argv[4]
 
 from_date = date_obj.strftime('%d.%m.%Y')
 to_date = (date_obj + datetime.timedelta(1)).strftime('%d.%m.%Y')
@@ -34,8 +36,14 @@ if login_result.status_code != 302:
     print("Headers:", login_result.headers)
     sys.exit(2)
 
+
+if scrape_type == 'production':
+    export_type = 'production'
+else:
+    export_type = 'hours'
+
 export_payload = {
-    'exporttype': 'hours',
+    'exporttype': export_type,
     'export-range': from_date + ' - ' + to_date
 }
 

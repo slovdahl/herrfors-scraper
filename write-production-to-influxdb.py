@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import datetime
-import dateutil
 import sys
+
+import dateutil
 from influxdb import InfluxDBClient
 
 client = InfluxDBClient(host='localhost', port=8086)
-client.switch_database('power_consumption')
+client.switch_database('power_production')
 
 local_tz = dateutil.tz.gettz('Europe/Helsinki')
 
@@ -16,28 +17,28 @@ json_body = []
 try:
     for line in sys.stdin:
         # Example:
-        # 31.05.2021 00-01;0,47
-        # 31.05.2021 01-02;0,48
-        # 31.05.2021 02-03;0,53
-        # 31.05.2021 03-04;1,02
+        # 2023-06-26 00:00:00;0,00
+        # 2023-06-26 01:00:00;0,00
+        # 2023-06-26 02:00:00;0,00
+        # 2023-06-26 03:00:00;0,00
 
-        full_timestamp_string, power_usage_string = line.split(';')
-        measurement_date, measurement_hour_range = full_timestamp_string.split(' ')
-        # This feels wrong, we should use the second one instead. But the Herrfors
-        # web UI shows it like this.
-        measurement_hour, _ = measurement_hour_range.split('-')
+        full_timestamp_string, power_production_string = line.split(';')
+        measurement_date, measurement_hour_minute_second = full_timestamp_string.split(' ')
+
+        # 2023-06-26 00:00:00 seems to mean the production between 00:00:00 and 01:00:00
+        measurement_hour, _, _ = measurement_hour_minute_second.split(':')
 
         timestamp_tzless = datetime.datetime.strptime(measurement_date, '%d.%m.%Y').replace(hour=int(measurement_hour))
         timestamp_local_tz = timestamp_tzless.replace(tzinfo=local_tz)
 
-        power_usage_kwh = float(power_usage_string.strip().replace(',', '.'))
+        power_production_kwh = float(power_production_string.strip().replace(',', '.'))
 
         json_body.append(
             {
                 "measurement": "kWh",
                 "time": timestamp_local_tz.isoformat(timespec='seconds'),
                 "fields": {
-                    "value": power_usage_kwh
+                    "value": power_production_kwh
                 }
             }
         )
