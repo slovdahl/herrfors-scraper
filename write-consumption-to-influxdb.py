@@ -26,7 +26,7 @@ try:
         try:
             full_timestamp_string, power_usage_string = line.split(';')
         except ValueError:
-            print(f"Failed to parse production line '{line}'")
+            print(f"Failed to parse consumption line '{line}'")
             traceback.print_exc(file=sys.stderr)
             sys.exit(1)
 
