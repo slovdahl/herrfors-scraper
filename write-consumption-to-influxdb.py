@@ -23,6 +23,9 @@ try:
         # 31.05.2021 02-03;0,53
         # 31.05.2021 03-04;1,02
 
+        if ';' not in line:
+            print(f"Failed to parse consumption line '{line}', ignoring")
+
         try:
             full_timestamp_string, power_usage_string = line.split(';')
         except ValueError:

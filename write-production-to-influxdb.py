@@ -23,6 +23,9 @@ try:
         # 2023-06-26 02:00:00;0,00
         # 2023-06-26 03:00:00;0,00
 
+        if ';' not in line:
+            print(f"Failed to parse production line '{line}', ignoring")
+
         try:
             full_timestamp_string, power_production_string = line.split(';')
         except ValueError:
