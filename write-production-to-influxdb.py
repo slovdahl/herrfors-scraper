@@ -2,6 +2,7 @@
 
 import datetime
 import sys
+import traceback
 
 import dateutil
 from influxdb import InfluxDBClient
@@ -22,7 +23,13 @@ try:
         # 2023-06-26 02:00:00;0,00
         # 2023-06-26 03:00:00;0,00
 
-        full_timestamp_string, power_production_string = line.split(';')
+        try:
+            full_timestamp_string, power_production_string = line.split(';')
+        except ValueError:
+            print(f"Failed to parse consumption line '{line}'")
+            traceback.print_exc(file=sys.stderr)
+            sys.exit(1)
+
         measurement_date, measurement_hour_minute_second = full_timestamp_string.split(' ')
 
         # 2023-06-26 00:00:00 seems to mean the production between 00:00:00 and 01:00:00
@@ -44,7 +51,6 @@ try:
         )
 
         written_rows += 1
-
 except KeyboardInterrupt:
     sys.stdout.flush()
     pass
