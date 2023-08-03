@@ -56,6 +56,7 @@ if result.status_code != 200 or (
         'content-disposition' not in result.headers
     ):
     print("Unexpected HTTP response:", result.status_code)
+    print("Headers:", result.headers)
     sys.exit(3)
 
 non_empty_lines = [line for line in result.text.split("\n") if line.strip() != ""]
