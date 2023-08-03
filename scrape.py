@@ -51,7 +51,10 @@ result = s.post('https://meter.katterno.fi/export.php',
                 data=export_payload,
                 allow_redirects=False)
 
-if result.status_code != 200 or not result.headers['Content-Disposition']:
+if result.status_code != 200 or (
+        'Content-Disposition' not in result.headers and
+        'content-disposition' not in result.headers
+    ):
     print("Unexpected HTTP response:", result.status_code)
     sys.exit(3)
 
