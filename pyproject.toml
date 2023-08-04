@@ -33,5 +33,10 @@ ignore = [
     "PLR2004", # magic-value-comparison
 ]
 
+unfixable = [
+    "ARG001",  # Unused function argument
+    "F841",    # Local variable name is assigned to but never used
+]
+
 [tool.ruff.isort]
 known-first-party = ["herrfors_scraper"]
