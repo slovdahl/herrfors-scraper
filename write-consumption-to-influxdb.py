@@ -25,6 +25,7 @@ try:
 
         if ';' not in line:
             print(f"Failed to parse consumption line '{line}', ignoring")
+            continue
 
         try:
             full_timestamp_string, power_usage_string = line.split(';')
