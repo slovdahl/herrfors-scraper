@@ -28,8 +28,9 @@ select = [
 ]
 
 ignore = [
-    "D203", # one-blank-line-before-class
-    "D213", # multi-line-summary-second-line
+    "D203",    # one-blank-line-before-class
+    "D213",    # multi-line-summary-second-line
+    "PLR2004", # magic-value-comparison
 ]
 
 [tool.ruff.isort]
