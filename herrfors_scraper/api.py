@@ -44,7 +44,7 @@ def get_data(session: Session, start: date, end: date, scrape_type: Type) -> lis
 
     export_payload = {
         "exporttype": export_type,
-        "export-range": f"{start} - {end}",
+        "export-range": f"{start.strftime('%d.%m.%Y')} - {end.strftime('%d.%m.%Y')}",
     }
 
     result = session.post("https://meter.katterno.fi/export.php",

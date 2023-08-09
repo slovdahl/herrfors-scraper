@@ -1,6 +1,7 @@
 # ruff: noqa: T201
 """Application main entry point."""
 
+import sys
 from datetime import date, timedelta
 
 from herrfors_scraper.api import create_session, get_data
@@ -12,15 +13,16 @@ def main(args: any) -> int:  # noqa: D103
     if len(args) != 5:
         print("Insufficient parameters.")
         print()
-        print("Usage: \
-              <usage place> \
-              <customer number> \
-              <days backwards> \
-              <consumption|production>")
+        print("Usage: "
+              "<usage place> "
+              "<customer number> "
+              "<days backwards> "
+              "<consumption|production>")
+        sys.exit(0)
 
     usage_place = int(args[1])
     customer_number = int(args[2])
-    days = args[3]
+    days = int(args[3])
 
     if args[4] == "consumption":
         scrape_type = Type.CONSUMPTION
@@ -37,3 +39,5 @@ def main(args: any) -> int:  # noqa: D103
                     start=from_date,
                     end=to_date,
                     scrape_type=scrape_type)
+
+    print(str(data))
