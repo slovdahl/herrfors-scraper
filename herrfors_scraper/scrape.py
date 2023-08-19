@@ -40,4 +40,5 @@ def main(args: any) -> int:  # noqa: D103
                     end=to_date,
                     scrape_type=scrape_type)
 
-    print(str(data))
+    for line in data:
+        print(line)
