@@ -9,10 +9,11 @@ from influxdb import InfluxDBClient
 local_tz = dateutil.tz.gettz("Europe/Helsinki")
 
 
-def parse_measurement_date_hour(measurement_date: str,
+def parse_measurement_date_hour(date_format: str,
+                                measurement_date: str,
                                 measurement_hour: str) -> datetime:
     """Parse the measurement date and hour."""
-    return datetime.strptime(measurement_date, "%d.%m.%Y")\
+    return datetime.strptime(measurement_date, date_format)\
             .replace(tzinfo=local_tz)\
             .replace(hour=int(measurement_hour))
 
