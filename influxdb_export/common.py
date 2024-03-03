@@ -31,14 +31,14 @@ def to_measurement_entry(timestamp_local_tz: datetime,
 
 def write_to_influx(database: str, json_body: list[dict[str, str]]) -> None:
     """Write the given data points to the given database."""
-    with InfluxDBClient(host="localhost", port=8086) as client:
-        client.switch_database(database)
+    client = InfluxDBClient(host="localhost", port=8086)
+    client.switch_database(database)
 
-        client.write_points(
-            points=json_body,
-            time_precision="s",
-            tags={
-                "provider": "Herrfors",
-                "source": "meter.katterno.fi",
-            },
-        )
+    client.write_points(
+        points=json_body,
+        time_precision="s",
+        tags={
+            "provider": "Herrfors",
+            "source": "meter.katterno.fi",
+        },
+    )
