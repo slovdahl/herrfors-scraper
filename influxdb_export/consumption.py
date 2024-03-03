@@ -1,16 +1,13 @@
 """Consumption exporter."""
 
-import datetime
 import sys
 import traceback
 
-import dateutil
-from influxdb import InfluxDBClient
-
-client = InfluxDBClient(host="localhost", port=8086)
-client.switch_database("power_consumption")
-
-local_tz = dateutil.tz.gettz("Europe/Helsinki")
+from influxdb_export.common import (
+    parse_measurement_date_hour,
+    to_measurement_entry,
+    write_to_influx,
+)
 
 written_rows = 0
 json_body = []
@@ -39,34 +36,17 @@ try:
         # web UI shows it like this.
         measurement_hour, _ = measurement_hour_range.split("-")
 
-        timestamp_local_tz = datetime.datetime.strptime(measurement_date, "%d.%m.%Y")\
-            .replace(tzinfo=local_tz)\
-            .replace(hour=int(measurement_hour))
+        timestamp_local_tz = parse_measurement_date_hour(measurement_date,
+                                                         measurement_hour)
 
         power_usage_kwh = float(power_usage_string.strip().replace(",", "."))
 
-        json_body.append(
-            {
-                "measurement": "kWh",
-                "time": timestamp_local_tz.isoformat(timespec="seconds"),
-                "fields": {
-                    "value": power_usage_kwh,
-                },
-            },
-        )
+        json_body.append(to_measurement_entry(timestamp_local_tz, power_usage_kwh))
 
         written_rows += 1
-
 except KeyboardInterrupt:
     sys.stdout.flush()
     pass
 
 if json_body:
-    client.write_points(
-        points=json_body,
-        time_precision="s",
-        tags={
-            "provider": "Herrfors",
-            "source": "meter.katterno.fi",
-        },
-    )
+    write_to_influx("power_consumption", json_body)
