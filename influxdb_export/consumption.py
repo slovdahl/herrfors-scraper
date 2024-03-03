@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+"""Consumption exporter."""
 
 import datetime
 import sys
@@ -7,10 +7,10 @@ import traceback
 import dateutil
 from influxdb import InfluxDBClient
 
-client = InfluxDBClient(host='localhost', port=8086)
-client.switch_database('power_consumption')
+client = InfluxDBClient(host="localhost", port=8086)
+client.switch_database("power_consumption")
 
-local_tz = dateutil.tz.gettz('Europe/Helsinki')
+local_tz = dateutil.tz.gettz("Europe/Helsinki")
 
 written_rows = 0
 json_body = []
@@ -23,35 +23,36 @@ try:
         # 31.05.2021 02-03;0,53
         # 31.05.2021 03-04;1,02
 
-        if ';' not in line:
+        if ";" not in line:
             print(f"Failed to parse consumption line '{line}', ignoring")
             continue
 
         try:
-            full_timestamp_string, power_usage_string = line.split(';')
+            full_timestamp_str, power_usage_string = line.split(";")
         except ValueError:
             print(f"Failed to parse consumption line '{line}'")
             traceback.print_exc(file=sys.stderr)
             sys.exit(1)
 
-        measurement_date, measurement_hour_range = full_timestamp_string.split(' ')
+        measurement_date, measurement_hour_range = full_timestamp_str.split(" ")
         # This feels wrong, we should use the second one instead. But the Herrfors
         # web UI shows it like this.
-        measurement_hour, _ = measurement_hour_range.split('-')
+        measurement_hour, _ = measurement_hour_range.split("-")
 
-        timestamp_tzless = datetime.datetime.strptime(measurement_date, '%d.%m.%Y').replace(hour=int(measurement_hour))
-        timestamp_local_tz = timestamp_tzless.replace(tzinfo=local_tz)
+        timestamp_local_tz = datetime.datetime.strptime(measurement_date, "%d.%m.%Y")\
+            .replace(tzinfo=local_tz)\
+            .replace(hour=int(measurement_hour))
 
-        power_usage_kwh = float(power_usage_string.strip().replace(',', '.'))
+        power_usage_kwh = float(power_usage_string.strip().replace(",", "."))
 
         json_body.append(
             {
                 "measurement": "kWh",
-                "time": timestamp_local_tz.isoformat(timespec='seconds'),
+                "time": timestamp_local_tz.isoformat(timespec="seconds"),
                 "fields": {
-                    "value": power_usage_kwh
-                }
-            }
+                    "value": power_usage_kwh,
+                },
+            },
         )
 
         written_rows += 1
@@ -63,9 +64,9 @@ except KeyboardInterrupt:
 if json_body:
     client.write_points(
         points=json_body,
-        time_precision='s',
+        time_precision="s",
         tags={
             "provider": "Herrfors",
-            "source": "meter.katterno.fi"
-        }
+            "source": "meter.katterno.fi",
+        },
     )

@@ -7,6 +7,7 @@ readme = "README.md"
 license = "MIT"
 packages = [
     { include = "herrfors_scraper" },
+    { include = "influxdb_export" },
 ]
 
 [tool.poetry.dependencies]
@@ -39,6 +40,7 @@ ignore = [
     "D203",    # one-blank-line-before-class
     "D213",    # multi-line-summary-second-line
     "PLR2004", # magic-value-comparison
+    "T201",    # print found
 ]
 
 unfixable = [
