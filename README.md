@@ -27,3 +27,15 @@ $ python3 -m herrfors_scraper <username> <password> <days> production
 ```shell
 $ python3 -m herrfors_scraper <username> <password> <days> production | python3 write-production-to-influxdb.py
 ```
+
+## Development environment setup
+
+1. Install Poetry
+2. `poetry install`
+3. `poetry self add poetry-auto-export`
+
+## Manually exporting requirements to requirements.txt
+
+```shell
+$ poetry export --format=requirements.txt --without-hashes > requirements.txt
+```
