@@ -36,7 +36,8 @@ try:
         # web UI shows it like this.
         measurement_hour, _ = measurement_hour_range.split("-")
 
-        timestamp_local_tz = parse_measurement_date_hour(measurement_date,
+        timestamp_local_tz = parse_measurement_date_hour("%d.%m.%Y",
+                                                         measurement_date,
                                                          measurement_hour)
 
         power_usage_kwh = float(power_usage_string.strip().replace(",", "."))

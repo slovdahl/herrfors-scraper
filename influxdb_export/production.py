@@ -36,7 +36,8 @@ try:
         # 2023-06-26 00:00:00 seems to mean the production between 00:00:00 and 01:00:00
         measurement_hour, _, _ = measurement_hour_minute_second.split(":")
 
-        timestamp_local_tz = parse_measurement_date_hour(measurement_date,
+        timestamp_local_tz = parse_measurement_date_hour("%Y-%m-%d",
+                                                         measurement_date,
                                                          measurement_hour)
 
         power_production_kwh = float(power_production_string.strip().replace(",", "."))
