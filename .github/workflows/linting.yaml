@@ -57,3 +57,32 @@ jobs:
         run: poetry install --no-interaction
       - name: 🚀 Run yamllint
         run: poetry run yamllint .
+
+  requirements-export:
+    name: requirements-export
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4
+      - name: 🏗 Set up Poetry
+        run: pipx install poetry
+      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        id: python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+          cache: 'poetry'
+      - name: 🏗 Install workflow dependencies
+        run: |
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+      - name: 🏗 Install Python dependencies
+        run: poetry install --no-interaction
+      - name: 🚀 Regenerate requirements.txt
+        run: poetry export --format=requirements.txt --without-hashes > requirements.txt
+      - name: Check if the git repository is dirty
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.12
+      - name: Fail if repository is dirty
+        if: steps.changes.outputs.changed == 1
+        run: exit 1
