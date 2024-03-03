@@ -123,17 +123,17 @@ files = [
 
 [[package]]
 name = "influxdb"
-version = "5.3.0"
+version = "5.3.1"
 description = "InfluxDB client"
 optional = false
 python-versions = "*"
 files = [
-    {file = "influxdb-5.3.0-py2.py3-none-any.whl", hash = "sha256:b4c034ee9c9ee888d43de547cf40c616bba35f0aa8f11e5a6f056bf5855970ac"},
-    {file = "influxdb-5.3.0.tar.gz", hash = "sha256:9bcaafd57ac152b9824ab12ed19f204206ef5df8af68404770554c5b55b475f6"},
+    {file = "influxdb-5.3.1-py2.py3-none-any.whl", hash = "sha256:65040a1f53d1a2a4f88a677e89e3a98189a7d30cf2ab61c318aaa89733280747"},
+    {file = "influxdb-5.3.1.tar.gz", hash = "sha256:46f85e7b04ee4b3dee894672be6a295c94709003a7ddea8820deec2ac4d8b27a"},
 ]
 
 [package.dependencies]
-msgpack = "0.6.1"
+msgpack = "*"
 python-dateutil = ">=2.6.0"
 pytz = "*"
 requests = ">=2.17.0"
@@ -360,4 +360,4 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "sphinx"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "be025afafeafd01c259bcdc84e4dccf60175900dff83f1097c404dec883ade40"
+content-hash = "67e88fa5983016cfea25d517a27c683efffd56e52035aba61e69a918fb24823b"
