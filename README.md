@@ -21,3 +21,9 @@ $ python3 -m herrfors_scraper <username> <password> <days> consumption
 ```shell
 $ python3 -m herrfors_scraper <username> <password> <days> production
 ```
+
+### Writing to InfluxDB
+
+```shell
+$ python3 -m herrfors_scraper <username> <password> <days> production | python3 write-production-to-influxdb.py
+```
