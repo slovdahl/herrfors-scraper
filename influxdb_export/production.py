@@ -46,7 +46,6 @@ try:
         written_rows += 1
 except KeyboardInterrupt:
     sys.stdout.flush()
-    pass
 
 if json_body:
     write_to_influx("power_production", json_body)

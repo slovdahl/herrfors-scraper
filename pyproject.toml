@@ -33,6 +33,7 @@ without = ["dev"]
 line-length = 88  # defaults to 88 like black
 target-version = "py38"
 
+[tool.ruff.lint]
 select = [
     "ALL"
 ]
@@ -49,5 +50,5 @@ unfixable = [
     "F841",    # Local variable name is assigned to but never used
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["herrfors_scraper"]
