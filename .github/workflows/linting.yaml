@@ -81,8 +81,8 @@ jobs:
       - name: 🚀 Regenerate requirements.txt
         run: poetry export --format=requirements.txt --without-hashes > requirements.txt
       - name: Check if the git repository is dirty
-        id: changes
-        uses: UnicornGlobal/has-changes-action@v1.0.12
+        id: get_changes
+        run: echo "changed=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
       - name: Fail if repository is dirty
-        if: steps.changes.outputs.changed == 1
+        if: steps.get_changes.outputs.changed != 0
         run: exit 1
