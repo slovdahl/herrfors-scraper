@@ -10,13 +10,13 @@ $ influx
 
 ## Usage
 
-### Consumption
+### Scrape consumption
 
 ```shell
 $ python3 -m herrfors_scraper <username> <password> <days> consumption
 ```
 
-### Production
+### Scrape production
 
 ```shell
 $ python3 -m herrfors_scraper <username> <password> <days> production
