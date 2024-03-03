@@ -3,7 +3,7 @@
 ## Create InfluxDB databases
 
 ```
-$ run-influx.sh
+$ influx
 > CREATE DATABASE power_consumption;
 > CREATE DATABASE power_production;
 ```
