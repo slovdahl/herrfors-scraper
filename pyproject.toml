@@ -17,7 +17,7 @@ influxdb = "5.3.2"
 requests = "2.32.3"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.4.8"
+ruff = "^0.4.9"
 yamllint = "^1.29.0"
 
 [build-system]
