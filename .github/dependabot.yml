@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: pip
     directory: "/"
     schedule:
-      interval: weekly
+      interval: monthly
       time: "02:00"
   - package-ecosystem: "github-actions"
     directory: "/"
