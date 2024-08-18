@@ -13,19 +13,22 @@ $ influx
 ### Scrape consumption
 
 ```shell
-$ python3 -m herrfors_scraper <username> <password> <days> consumption
+$ poetry shell
+$ python -m herrfors_scraper <username> <password> <days> consumption
 ```
 
 ### Scrape production
 
 ```shell
-$ python3 -m herrfors_scraper <username> <password> <days> production
+$ poetry shell
+$ python -m herrfors_scraper <username> <password> <days> production
 ```
 
 ### Writing to InfluxDB
 
 ```shell
-$ python3 -m herrfors_scraper <username> <password> <days> production | python3 write-production-to-influxdb.py
+$ poetry shell
+$ python -m herrfors_scraper <username> <password> <days> production | python write-production-to-influxdb.py
 ```
 
 ## Development environment setup
