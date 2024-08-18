@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "herrfors-scraper"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Sebastian Lövdahl <slovdahl@hibox.fi>"]
 readme = "README.md"
@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.12"
 python-dateutil = "2.9.0.post0"
 influxdb = "5.3.2"
 requests = "2.32.3"
@@ -31,7 +31,7 @@ without = ["dev"]
 
 [tool.ruff]
 line-length = 88  # defaults to 88 like black
-target-version = "py38"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = [
