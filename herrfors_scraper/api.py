@@ -60,7 +60,10 @@ def get_data(session: Session, start: date, end: date, scrape_type: Type) -> lis
     ):
         raise NoDataError
 
-    non_empty_lines = [line.strip() for line in result.text.split("\n") if line.strip() != ""]
+    non_empty_lines = [
+        line.strip() for line in result.text.split("\n") if line.strip() != ""
+    ]
+
     non_empty_lines = [line for line in non_empty_lines if not line.startswith("Tid")]
 
     if len(non_empty_lines) == 0:
