@@ -1,5 +1,6 @@
 """Herrfors API."""
 
+import sys
 from datetime import date
 
 from requests import Session
@@ -52,12 +53,20 @@ def get_data(session: Session, start: date, end: date, scrape_type: Type) -> lis
                           allow_redirects=False)
 
     if result.status_code != 200:
+        print(f"Unexpected status code: {result.status_code}", file=sys.stderr)
         raise NoDataError
+
+    if (
+        "text/html" in result.headers["content-type"] and
+        "Ingen data hittades" in result.text
+    ):
+        print("Output contained 'Ingen data hittades'", file=sys.stderr)
 
     if (
         "Content-Disposition" not in result.headers and
         "content-disposition" not in result.headers
     ):
+        print("No Content-Disposition header in response", file=sys.stderr)
         raise NoDataError
 
     non_empty_lines = [
@@ -67,6 +76,7 @@ def get_data(session: Session, start: date, end: date, scrape_type: Type) -> lis
     non_empty_lines = [line for line in non_empty_lines if not line.startswith("Tid")]
 
     if len(non_empty_lines) == 0:
+        print("Empty response", file=sys.stderr)
         raise NoDataError
 
     if len(non_empty_lines) <= 1:
