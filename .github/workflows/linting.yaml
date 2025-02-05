@@ -9,7 +9,8 @@ on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
 
 env:
-  DEFAULT_PYTHON: "3.12"
+  PYTHON_VERSION: "3.12"
+  POETRY_VERSION: "2.0.1"
 
 jobs:
   ruff:
@@ -19,12 +20,12 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4
       - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        run: pipx install poetry==${{ env.POETRY_VERSION }}
+      - name: 🏗 Set up Python ${{ env.PYTHON_VERSION }}
         id: python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'poetry'
       - name: 🏗 Install workflow dependencies
         run: |
@@ -42,12 +43,12 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4
       - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        run: pipx install poetry==${{ env.POETRY_VERSION }}
+      - name: 🏗 Set up Python ${{ env.PYTHON_VERSION }}
         id: python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'poetry'
       - name: 🏗 Install workflow dependencies
         run: |
@@ -65,12 +66,12 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v4
       - name: 🏗 Set up Poetry
-        run: pipx install poetry
-      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        run: pipx install poetry==${{ env.POETRY_VERSION }}
+      - name: 🏗 Set up Python ${{ env.PYTHON_VERSION }}
         id: python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.DEFAULT_PYTHON }}
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'poetry'
       - name: 🏗 Install workflow dependencies
         run: |
@@ -78,6 +79,8 @@ jobs:
           poetry config virtualenvs.in-project true
       - name: 🏗 Install Python dependencies
         run: poetry install --no-interaction
+      - name: 🏗 Install Poetry Export
+        run: poetry self add poetry-plugin-export
       - name: 🚀 Regenerate requirements.txt
         run: poetry export --format=requirements.txt --without-hashes > requirements.txt
       - name: Check if the git repository is dirty
