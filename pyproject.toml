@@ -1,21 +1,21 @@
-[tool.poetry]
+[project]
 name = "herrfors-scraper"
 version = "0.2.0"
 description = ""
-authors = ["Sebastian Lövdahl <slovdahl@hibox.fi>"]
+authors = [{name = "Sebastian Lövdahl", email = "slovdahl@hibox.fi"}]
 readme = "README.md"
 license = "MIT"
 packages = [
     { include = "herrfors_scraper" },
     { include = "influxdb_export" },
 ]
+requires-python = ">=3.12"
 requires-poetry = ">=2.0"
 
 [tool.poetry.requires-plugins]
 poetry-plugin-export = ">=1.8"
 
 [tool.poetry.dependencies]
-python = "^3.12"
 python-dateutil = "2.9.0.post0"
 influxdb = "5.3.2"
 requests = "2.32.3"
@@ -27,10 +27,6 @@ yamllint = "^1.29.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry-plugin-export]
-output = "requirements.txt"
-without_hashes = true
 
 [tool.ruff]
 line-length = 88  # defaults to 88 like black
