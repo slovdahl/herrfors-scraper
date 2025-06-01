@@ -4,10 +4,10 @@ updates:
   - package-ecosystem: pip
     directory: "/"
     schedule:
-      interval: monthly
-      time: "02:00"
+      interval: cron
+      cronjob: "25 4 1,14 * *"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: monthly
+      interval: weekly
       time: "02:00"
