@@ -6,6 +6,7 @@ updates:
     schedule:
       interval: cron
       cronjob: "25 4 1,14 * *"
+      timezone: "Europe/Helsinki"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
