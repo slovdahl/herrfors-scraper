@@ -1,4 +1,3 @@
-# ruff: noqa: T201
 """Application main entry point."""
 
 import sys
