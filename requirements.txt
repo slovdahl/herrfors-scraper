@@ -1,4 +1,4 @@
-certifi==2025.7.9 ; python_version >= "3.12"
+certifi==2025.8.3 ; python_version >= "3.12"
 charset-normalizer==3.4.2 ; python_version >= "3.12"
 idna==3.10 ; python_version >= "3.12"
 influxdb==5.3.2 ; python_version >= "3.12"
