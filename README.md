@@ -37,6 +37,12 @@ $ python -m herrfors_scraper <username> <password> <days> production | python w
 2. `poetry install`
 3. `poetry self add poetry-auto-export`
 
+## Run Herrfors scraper in development environment
+
+```
+poetry run python -m herrfors_scraper
+```
+
 ## Manually exporting requirements to requirements.txt
 
 ```shell
